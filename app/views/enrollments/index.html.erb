@@ -1,0 +1,24 @@
+<% content_for :title, "Moje zapisy" %>
+
+<h1 class="page-title">Moje zapisy</h1>
+
+<% if @enrollments.any? %>
+  <ul class="mt-6 space-y-3">
+    <% @enrollments.each do |enrollment| %>
+      <% group = enrollment.course_group %>
+      <li class="card flex flex-wrap items-center justify-between gap-3">
+        <div>
+          <%= link_to group.course.name, course_path(group.course), class: "link font-semibold" %>
+          <p class="text-sm text-gray-600"><%= group.name %> · <%= group.instructor.name %></p>
+          <p class="mt-1 badge <%= enrollment.active? ? "bg-green-100 text-green-800" : "bg-yellow-100 text-yellow-800" %>">
+            <%= t("enrollment_statuses.#{enrollment.status}") %>
+          </p>
+        </div>
+        <%= button_to "Zrezygnuj", enrollment_path(enrollment), method: :delete, class: "btn-secondary",
+              form: { data: { turbo_confirm: "Na pewno zrezygnować z tej grupy?" } } %>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p class="card mt-6 text-gray-600">Nie masz jeszcze żadnych zapisów. <%= link_to "Przeglądaj kursy", courses_path, class: "link" %>.</p>
+<% end %>

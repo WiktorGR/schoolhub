@@ -12,10 +12,7 @@
 <% if @course_groups.any? %>
   <ul class="mt-4 space-y-3">
     <% @course_groups.each do |group| %>
-      <li class="card" id="<%= dom_id(group) %>">
-        <h3 class="font-semibold"><%= group.name %></h3>
-        <p class="text-sm text-gray-600">Instruktor: <%= group.instructor.name %> · Limit miejsc: <%= group.capacity %></p>
-      </li>
+      <%= render "course_group", group: group, seats_taken: @seats_taken.fetch(group.id, 0), enrollment: @my_enrollments[group.id] %>
     <% end %>
   </ul>
 <% else %>

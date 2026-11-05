@@ -4,6 +4,10 @@ Rails.application.routes.draw do
   resources :passwords, param: :token
 
   resources :courses, only: %i[ index show ]
+  resources :course_groups, only: [] do
+    resources :enrollments, only: :create
+  end
+  resources :enrollments, only: %i[ index destroy ]
 
   namespace :admin do
     resources :courses do

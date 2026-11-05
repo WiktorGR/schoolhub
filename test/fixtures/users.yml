@@ -12,6 +12,18 @@ two:
   password_digest: <%= password_digest %>
   role: participant
 
+three:
+  name: Ola Lewandowska
+  email_address: three@example.com
+  password_digest: <%= password_digest %>
+  role: participant
+
+four:
+  name: Jan Kamiński
+  email_address: four@example.com
+  password_digest: <%= password_digest %>
+  role: participant
+
 instructor:
   name: Ewa Kowalska
   email_address: instructor@example.com

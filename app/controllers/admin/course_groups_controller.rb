@@ -5,6 +5,8 @@ module Admin
     before_action :set_instructors, only: %i[ new create edit update ]
 
     def show
+      @active_enrollments = @course_group.enrollments.active.includes(:user).order(:created_at)
+      @waitlisted_enrollments = @course_group.enrollments.waitlisted.includes(:user).in_waitlist_order
     end
 
     def new
@@ -25,7 +27,12 @@ module Admin
     end
 
     def update
-      if @course_group.update(course_group_params)
+      # A larger capacity frees seats, which go to the waitlist straight away.
+      saved = @course_group.with_lock do
+        @course_group.update(course_group_params) && @course_group.fill_free_seats_from_waitlist
+      end
+
+      if saved
         redirect_to admin_course_group_path(@course_group), notice: "Grupa została zapisana."
       else
         render :edit, status: :unprocessable_entity

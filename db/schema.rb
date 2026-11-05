@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_11_05_120520) do
+ActiveRecord::Schema[8.1].define(version: 2026_11_05_120957) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -32,6 +32,19 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_05_120520) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["name"], name: "index_courses_on_name", unique: true
+  end
+
+  create_table "enrollments", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "course_group_id", null: false
+    t.integer "status", null: false
+    t.datetime "cancelled_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["course_group_id", "status", "created_at"], name: "index_enrollments_on_course_group_id_and_status_and_created_at"
+    t.index ["course_group_id", "user_id"], name: "index_enrollments_one_open_per_user_and_group", unique: true, where: "(status = ANY (ARRAY[0, 1]))"
+    t.index ["user_id"], name: "index_enrollments_on_user_id"
+    t.check_constraint "status = ANY (ARRAY[0, 1, 2])", name: "enrollments_status_check"
   end
 
   create_table "sessions", force: :cascade do |t|
@@ -56,5 +69,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_05_120520) do
 
   add_foreign_key "course_groups", "courses"
   add_foreign_key "course_groups", "users", column: "instructor_id"
+  add_foreign_key "enrollments", "course_groups"
+  add_foreign_key "enrollments", "users"
   add_foreign_key "sessions", "users"
 end

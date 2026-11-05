@@ -4,6 +4,7 @@ pl:
       user: "Użytkownik"
       course: "Kurs"
       course_group: "Grupa"
+      enrollment: "Zapis"
     attributes:
       user:
         name: "Imię i nazwisko"
@@ -22,12 +23,24 @@ pl:
         instructor: "Instruktor"
         instructor_id: "Instruktor"
         course: "Kurs"
+      enrollment:
+        user: "Uczestnik"
+        course_group: "Grupa"
+        status: "Status"
     errors:
       models:
         course_group:
           attributes:
             instructor:
               not_an_instructor: "wybrana osoba nie ma roli instruktora"
+            capacity:
+              below_active_enrollments: "nie może być mniejszy niż liczba zapisanych osób (%{count})"
+        enrollment:
+          attributes:
+            user:
+              not_a_participant: "tylko uczestnicy mogą zapisywać się na zajęcia"
+            base:
+              already_enrolled: "Masz już miejsce w tej grupie lub czekasz na liście rezerwowej."
   # rails-i18n phrases agree with a neuter noun ("nie może być puste"), which is wrong for
   # most of our attribute names. "Field: message" with neutral phrasing reads well for all.
   errors:
@@ -46,6 +59,10 @@ pl:
       too_short: "za mało znaków (minimum %{count})"
       too_long: "za dużo znaków (maksimum %{count})"
       required: "to pole jest wymagane"
+  enrollment_statuses:
+    active: "Masz miejsce"
+    waitlisted: "Lista rezerwowa"
+    cancelled: "Zrezygnowano"
   roles:
     participant: "Uczestnik"
     instructor: "Instruktor"

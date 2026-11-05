@@ -1,0 +1,31 @@
+<%# locals: (group:, seats_taken:, enrollment:) %>
+<li class="card" id="<%= dom_id(group) %>">
+  <div class="flex flex-wrap items-start justify-between gap-3">
+    <div>
+      <h3 class="font-semibold"><%= group.name %></h3>
+      <p class="text-sm text-gray-600">Instruktor: <%= group.instructor.name %></p>
+      <p class="text-sm text-gray-600">
+        Wolne miejsca: <strong><%= [ group.capacity - seats_taken, 0 ].max %></strong> z <%= group.capacity %>
+      </p>
+    </div>
+
+    <% if Current.user.participant? %>
+      <div class="w-full sm:w-auto">
+        <% if enrollment&.active? %>
+          <p class="badge bg-green-100 text-green-800">Masz miejsce</p>
+        <% elsif enrollment&.waitlisted? %>
+          <p class="badge bg-yellow-100 text-yellow-800">Lista rezerwowa, pozycja <%= enrollment.waitlist_position %></p>
+        <% end %>
+
+        <% if enrollment %>
+          <%= button_to "Zrezygnuj", enrollment_path(enrollment), method: :delete, class: "btn-secondary mt-2 w-full sm:w-auto",
+                form: { data: { turbo_confirm: "Na pewno zrezygnować z tej grupy?" } } %>
+        <% elsif seats_taken < group.capacity %>
+          <%= button_to "Zapisz się", course_group_enrollments_path(group), class: "btn-primary w-full sm:w-auto" %>
+        <% else %>
+          <%= button_to "Zapisz się na listę rezerwową", course_group_enrollments_path(group), class: "btn-secondary w-full sm:w-auto" %>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+</li>

@@ -59,5 +59,36 @@ module Admin
 
       assert_redirected_to admin_course_path(@course)
     end
+
+    test "admin sees enrolled and waitlisted participants" do
+      @group.enroll(users(:two))
+      @group.enroll(users(:three))
+      sign_in_as users(:admin)
+
+      get admin_course_group_path(@group)
+
+      assert_select "section", /Zapisani \(2\/2\).*Anna Nowak/m
+      assert_select "section", /Lista rezerwowa \(1\).*Ola Lewandowska/m
+    end
+
+    test "raising capacity promotes waitlisted participants" do
+      @group.enroll(users(:two))
+      waitlisted = @group.enroll(users(:three))
+      sign_in_as users(:admin)
+
+      patch admin_course_group_path(@group), params: { course_group: { capacity: 3 } }
+
+      assert waitlisted.reload.active?
+    end
+
+    test "capacity cannot be lowered below taken seats" do
+      @group.enroll(users(:two))
+      sign_in_as users(:admin)
+
+      patch admin_course_group_path(@group), params: { course_group: { capacity: 1 } }
+
+      assert_response :unprocessable_entity
+      assert_equal 2, @group.reload.capacity
+    end
   end
 end

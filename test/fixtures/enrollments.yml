@@ -1,0 +1,13 @@
+# english_evening has capacity 2: one seat taken by "one", one seat free.
+one_in_english_evening:
+  user: one
+  course_group: english_evening
+  status: active
+  created_at: <%= 3.days.ago %>
+
+two_cancelled_english_evening:
+  user: two
+  course_group: english_evening
+  status: cancelled
+  cancelled_at: <%= 1.day.ago %>
+  created_at: <%= 2.days.ago %>

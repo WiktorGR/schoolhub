@@ -15,3 +15,31 @@
   <div><dt class="text-sm text-gray-500">Instruktor</dt><dd><%= @course_group.instructor.name %></dd></div>
   <div><dt class="text-sm text-gray-500">Limit miejsc</dt><dd><%= @course_group.capacity %></dd></div>
 </dl>
+
+<div class="mt-8 grid gap-6 md:grid-cols-2">
+  <section>
+    <h2 class="text-xl font-semibold">Zapisani (<%= @active_enrollments.size %>/<%= @course_group.capacity %>)</h2>
+    <% if @active_enrollments.any? %>
+      <ol class="card mt-3 list-decimal space-y-1 pl-8">
+        <% @active_enrollments.each do |enrollment| %>
+          <li><%= enrollment.user.name %> <span class="text-sm text-gray-500"><%= enrollment.user.email_address %></span></li>
+        <% end %>
+      </ol>
+    <% else %>
+      <p class="card mt-3 text-gray-600">Nikt się jeszcze nie zapisał.</p>
+    <% end %>
+  </section>
+
+  <section>
+    <h2 class="text-xl font-semibold">Lista rezerwowa (<%= @waitlisted_enrollments.size %>)</h2>
+    <% if @waitlisted_enrollments.any? %>
+      <ol class="card mt-3 list-decimal space-y-1 pl-8">
+        <% @waitlisted_enrollments.each do |enrollment| %>
+          <li><%= enrollment.user.name %> <span class="text-sm text-gray-500"><%= enrollment.user.email_address %></span></li>
+        <% end %>
+      </ol>
+    <% else %>
+      <p class="card mt-3 text-gray-600">Lista rezerwowa jest pusta.</p>
+    <% end %>
+  </section>
+</div>
