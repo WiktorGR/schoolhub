@@ -3,6 +3,7 @@
     <%= link_to "SchoolHub", root_path, class: "mr-auto text-lg font-bold text-blue-700" %>
 
     <% if authenticated? %>
+      <%= link_to "Mój plan", schedule_path, class: "hover:underline" %>
       <%= link_to "Kursy", courses_path, class: "hover:underline" %>
       <% if Current.user.participant? %>
         <%= link_to "Moje zapisy", enrollments_path, class: "hover:underline" %>

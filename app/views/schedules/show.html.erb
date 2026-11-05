@@ -1,0 +1,19 @@
+<% content_for :title, "Mój plan" %>
+
+<h1 class="page-title">Mój plan</h1>
+
+<% if @lessons.any? %>
+  <% @lessons.group_by { |lesson| lesson.starts_at.to_date }.each do |day, lessons| %>
+    <section class="mt-6">
+      <h2 class="font-semibold capitalize text-gray-700"><%= l(day, format: :day_heading) %></h2>
+      <ul class="mt-2 space-y-3">
+        <%= render partial: "schedules/lesson", collection: lessons, as: :lesson %>
+      </ul>
+    </section>
+  <% end %>
+  <%= render "shared/pagination" %>
+<% elsif Current.user.participant? %>
+  <p class="card mt-6 text-gray-600">Brak nadchodzących zajęć. <%= link_to "Zapisz się na kurs", courses_path, class: "link" %>, aby zobaczyć tu swój plan.</p>
+<% else %>
+  <p class="card mt-6 text-gray-600">Brak nadchodzących zajęć.</p>
+<% end %>

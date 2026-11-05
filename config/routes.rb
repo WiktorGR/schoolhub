@@ -8,10 +8,13 @@ Rails.application.routes.draw do
     resources :enrollments, only: :create
   end
   resources :enrollments, only: %i[ index destroy ]
+  get "plan", to: "schedules#show", as: :schedule
 
   namespace :admin do
     resources :courses do
-      resources :course_groups, except: :index, shallow: true
+      resources :course_groups, except: :index, shallow: true do
+        resources :lessons, except: %i[ index show ]
+      end
     end
     resources :users, only: %i[ index edit update ]
   end

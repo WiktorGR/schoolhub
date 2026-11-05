@@ -5,6 +5,7 @@ pl:
       course: "Kurs"
       course_group: "Grupa"
       enrollment: "Zapis"
+      lesson: "Zajęcia"
     attributes:
       user:
         name: "Imię i nazwisko"
@@ -23,6 +24,10 @@ pl:
         instructor: "Instruktor"
         instructor_id: "Instruktor"
         course: "Kurs"
+      lesson:
+        starts_at: "Początek"
+        ends_at: "Koniec"
+        topic: "Temat"
       enrollment:
         user: "Uczestnik"
         course_group: "Grupa"
@@ -35,6 +40,10 @@ pl:
               not_an_instructor: "wybrana osoba nie ma roli instruktora"
             capacity:
               below_active_enrollments: "nie może być mniejszy niż liczba zapisanych osób (%{count})"
+        lesson:
+          attributes:
+            ends_at:
+              before_start: "musi być później niż początek"
         enrollment:
           attributes:
             user:
@@ -63,6 +72,12 @@ pl:
     active: "Masz miejsce"
     waitlisted: "Lista rezerwowa"
     cancelled: "Zrezygnowano"
+  time:
+    formats:
+      hour: "%H:%M"
+  date:
+    formats:
+      day_heading: "%A, %-d %B"
   roles:
     participant: "Uczestnik"
     instructor: "Instruktor"

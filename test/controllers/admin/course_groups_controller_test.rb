@@ -52,14 +52,25 @@ module Admin
       assert_equal 15, @group.reload.capacity
     end
 
-    test "admin deletes a group" do
+    test "admin deletes an empty group" do
       sign_in_as users(:admin)
+      group = @course.course_groups.create!(name: "Do usunięcia", capacity: 5, instructor: users(:instructor))
 
       assert_difference("CourseGroup.count", -1) do
-        delete admin_course_group_path(course_groups(:english_morning))
+        delete admin_course_group_path(group)
       end
 
       assert_redirected_to admin_course_path(@course)
+    end
+
+    test "admin cannot delete a group with lessons or enrollments" do
+      sign_in_as users(:admin)
+
+      assert_no_difference("CourseGroup.count") do
+        delete admin_course_group_path(course_groups(:english_morning))
+      end
+
+      assert_redirected_to admin_course_group_path(course_groups(:english_morning))
     end
 
     test "admin sees enrolled and waitlisted participants" do

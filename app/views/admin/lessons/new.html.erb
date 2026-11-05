@@ -1,0 +1,5 @@
+<% content_for :title, "Nowe zajęcia" %>
+
+<p><%= link_to "← #{@course_group.name}", admin_course_group_path(@course_group), class: "link text-sm" %></p>
+<h1 class="page-title mt-2">Nowe zajęcia</h1>
+<%= render "form", lesson: @lesson, series: true %>

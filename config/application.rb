@@ -21,7 +21,8 @@ module Schoolhub
     # These settings can be overridden in specific environments using the files
     # in config/environments, which are processed later.
     #
-    # config.time_zone = "Central Time (US & Canada)"
+    # The school works in Polish time; the database still stores UTC.
+    config.time_zone = "Warsaw"
 
     # The UI is Polish only; translations for built-in messages come from rails-i18n.
     config.i18n.available_locales = [ :pl ]

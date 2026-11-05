@@ -2,6 +2,7 @@ class CourseGroup < ApplicationRecord
   belongs_to :course
   belongs_to :instructor, class_name: "User", inverse_of: :taught_course_groups
   has_many :enrollments, dependent: :restrict_with_error
+  has_many :lessons, dependent: :restrict_with_error
 
   validates :name, presence: true, uniqueness: { scope: :course_id }, length: { maximum: 100 }
   validates :capacity, numericality: { only_integer: true, greater_than: 0 }

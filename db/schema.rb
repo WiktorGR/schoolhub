@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_11_05_120957) do
+ActiveRecord::Schema[8.1].define(version: 2026_11_05_121353) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -47,6 +47,18 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_05_120957) do
     t.check_constraint "status = ANY (ARRAY[0, 1, 2])", name: "enrollments_status_check"
   end
 
+  create_table "lessons", force: :cascade do |t|
+    t.bigint "course_group_id", null: false
+    t.datetime "starts_at", null: false
+    t.datetime "ends_at", null: false
+    t.string "topic"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["course_group_id", "starts_at"], name: "index_lessons_on_course_group_id_and_starts_at"
+    t.index ["starts_at"], name: "index_lessons_on_starts_at"
+    t.check_constraint "ends_at > starts_at", name: "lessons_end_after_start"
+  end
+
   create_table "sessions", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.string "ip_address"
@@ -71,5 +83,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_05_120957) do
   add_foreign_key "course_groups", "users", column: "instructor_id"
   add_foreign_key "enrollments", "course_groups"
   add_foreign_key "enrollments", "users"
+  add_foreign_key "lessons", "course_groups"
   add_foreign_key "sessions", "users"
 end

@@ -7,6 +7,7 @@ module Admin
     def show
       @active_enrollments = @course_group.enrollments.active.includes(:user).order(:created_at)
       @waitlisted_enrollments = @course_group.enrollments.waitlisted.includes(:user).in_waitlist_order
+      @lessons = @course_group.lessons.upcoming
     end
 
     def new

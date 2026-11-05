@@ -1,0 +1,8 @@
+<%# locals: (lesson:) %>
+<li class="card" id="<%= dom_id(lesson) %>">
+  <p class="font-semibold"><%= l(lesson.starts_at, format: :hour) %>–<%= l(lesson.ends_at, format: :hour) %> · <%= lesson.course_group.course.name %></p>
+  <p class="text-sm text-gray-600"><%= lesson.course_group.name %> · <%= lesson.course_group.instructor.name %></p>
+  <% if lesson.topic.present? %>
+    <p class="mt-1 text-sm"><%= lesson.topic %></p>
+  <% end %>
+</li>
