@@ -4,7 +4,14 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
   # dom_id lets tests target the same element ids the views render.
   include ActionView::RecordIdentifier
 
-  driven_by :selenium, using: :headless_chrome, screen_size: [ 1280, 900 ]
+  driven_by :selenium, using: :headless_chrome, screen_size: [ 1280, 900 ] do |options|
+    # Fixture users sign in with a weak password. Chrome's password manager then opens a
+    # native "password found in a data breach" bubble that silently swallows later clicks.
+    options.add_preference("credentials_enable_service", false)
+    options.add_preference("profile.password_manager_enabled", false)
+    options.add_preference("profile.password_manager_leak_detection", false)
+    options.add_argument("--disable-features=PasswordLeakDetection")
+  end
 
   private
     # System tests drive a real browser, so they sign in through the login form.

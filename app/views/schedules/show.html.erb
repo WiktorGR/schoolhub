@@ -15,7 +15,7 @@
 <% if @lessons.any? %>
   <% @lessons.group_by { |lesson| lesson.starts_at.to_date }.each do |day, lessons| %>
     <section class="mt-6">
-      <h2 class="font-semibold capitalize text-gray-700"><%= l(day, format: :day_heading) %></h2>
+      <h2 class="font-semibold text-gray-700 first-letter:uppercase"><%= l(day, format: :day_heading) %></h2>
       <ul class="mt-2 space-y-3">
         <%= render partial: "schedules/lesson", collection: lessons, as: :lesson %>
       </ul>
