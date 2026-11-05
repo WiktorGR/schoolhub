@@ -1,22 +1,31 @@
-<header class="border-b border-gray-200 bg-white">
-  <nav class="mx-auto flex max-w-4xl flex-wrap items-center gap-x-4 gap-y-2 px-4 py-3" aria-label="Główna nawigacja">
-    <%= link_to "SchoolHub", root_path, class: "mr-auto text-lg font-bold text-blue-700" %>
+<header class="border-b border-gray-200 bg-white" data-controller="menu">
+  <nav class="mx-auto max-w-4xl px-4 py-3" aria-label="Główna nawigacja">
+    <div class="flex items-center justify-between">
+      <%= link_to "SchoolHub", root_path, class: "text-lg font-bold text-blue-700" %>
+      <button type="button" class="rounded-md border border-gray-300 px-3 py-1 sm:hidden"
+              data-menu-target="button" data-action="menu#toggle"
+              aria-controls="main-menu" aria-expanded="false">Menu</button>
+    </div>
 
-    <% if authenticated? %>
-      <%= link_to "Mój plan", schedule_path, class: "hover:underline" %>
-      <%= link_to "Kursy", courses_path, class: "hover:underline" %>
-      <% if Current.user.participant? %>
-        <%= link_to "Moje zapisy", enrollments_path, class: "hover:underline" %>
-        <%= link_to "Mój karnet", passes_path, class: "hover:underline" %>
+    <div id="main-menu" data-menu-target="links"
+         class="hidden flex-col gap-3 pt-3 sm:mt-0 sm:flex sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-4 sm:pt-2">
+      <% if authenticated? %>
+        <%= link_to "Mój plan", schedule_path, class: "hover:underline" %>
+        <%= link_to "Kursy", courses_path, class: "hover:underline" %>
+        <% if Current.user.participant? %>
+          <%= link_to "Moje zapisy", enrollments_path, class: "hover:underline" %>
+          <%= link_to "Mój karnet", passes_path, class: "hover:underline" %>
+        <% end %>
+        <% if Current.user.admin? %>
+          <%= link_to "Admin: kursy", admin_courses_path, class: "hover:underline" %>
+          <%= link_to "Admin: użytkownicy", admin_users_path, class: "hover:underline" %>
+        <% end %>
+        <span class="text-sm text-gray-500 sm:ml-auto"><%= Current.user.name %></span>
+        <%= button_to "Wyloguj", session_path, method: :delete, class: "text-left text-gray-700 hover:underline", form_class: "inline" %>
+      <% else %>
+        <%= link_to "Zaloguj się", new_session_path, class: "hover:underline" %>
+        <%= link_to "Załóż konto", new_registration_path, class: "hover:underline" %>
       <% end %>
-      <% if Current.user.admin? %>
-        <%= link_to "Admin: kursy", admin_courses_path, class: "hover:underline" %>
-        <%= link_to "Admin: użytkownicy", admin_users_path, class: "hover:underline" %>
-      <% end %>
-      <%= button_to "Wyloguj", session_path, method: :delete, class: "text-gray-600 hover:underline", form_class: "inline" %>
-    <% else %>
-      <%= link_to "Zaloguj się", new_session_path, class: "hover:underline" %>
-      <%= link_to "Załóż konto", new_registration_path, class: "hover:underline" %>
-    <% end %>
+    </div>
   </nav>
 </header>
