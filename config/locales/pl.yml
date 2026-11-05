@@ -8,3 +8,12 @@ pl:
         password: "Hasło"
         password_confirmation: "Powtórzenie hasła"
         role: "Rola"
+    # rails-i18n messages assume a grammatical gender that does not fit these attribute names.
+    errors:
+      models:
+        user:
+          attributes:
+            email_address:
+              taken: "jest już zajęty"
+            password_confirmation:
+              confirmation: "nie zgadza się z hasłem"

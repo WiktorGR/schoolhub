@@ -46,4 +46,13 @@ class UserTest < ActiveSupport::TestCase
     assert_not user.valid?
     assert user.errors.of_kind?(:password, :too_short)
   end
+
+  test "uses grammatical Polish error messages" do
+    user = User.new(email_address: users(:one).email_address, password: "secret123", password_confirmation: "other123")
+
+    user.validate
+
+    assert_includes user.errors.full_messages, "Adres e-mail jest już zajęty"
+    assert_includes user.errors.full_messages, "Powtórzenie hasła nie zgadza się z hasłem"
+  end
 end
