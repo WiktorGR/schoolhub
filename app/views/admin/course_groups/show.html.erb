@@ -58,6 +58,7 @@
           <% if lesson.topic.present? %><p class="text-sm text-gray-600"><%= lesson.topic %></p><% end %>
         </div>
         <div class="flex flex-wrap gap-2">
+          <%= link_to "Obecność", edit_lesson_attendance_path(lesson), class: "btn-secondary" %>
           <%= link_to "Edytuj", edit_admin_lesson_path(lesson), class: "btn-secondary" %>
           <%= button_to "Usuń", admin_lesson_path(lesson), method: :delete, class: "btn-danger",
                 form: { data: { turbo_confirm: "Na pewno usunąć te zajęcia?" } } %>

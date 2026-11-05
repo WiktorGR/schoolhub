@@ -9,6 +9,10 @@ Rails.application.routes.draw do
   end
   resources :enrollments, only: %i[ index destroy ]
   get "plan", to: "schedules#show", as: :schedule
+  resources :lessons, only: [] do
+    resource :attendance, only: %i[ edit update ]
+  end
+  resources :passes, only: :index
 
   namespace :admin do
     resources :courses do
@@ -16,7 +20,9 @@ Rails.application.routes.draw do
         resources :lessons, except: %i[ index show ]
       end
     end
-    resources :users, only: %i[ index edit update ]
+    resources :users, only: %i[ index edit update ] do
+      resources :passes, only: %i[ new create ]
+    end
   end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

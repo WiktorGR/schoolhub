@@ -1,0 +1,30 @@
+<% content_for :title, "Mój karnet" %>
+
+<h1 class="page-title">Mój karnet</h1>
+
+<% if @passes.any? %>
+  <p class="card mt-6 text-lg">Pozostało wejść: <strong><%= @passes.sum(&:entries_remaining) %></strong></p>
+
+  <h2 class="mt-8 text-xl font-semibold">Karnety</h2>
+  <ul class="mt-3 space-y-3">
+    <% @passes.each do |pass| %>
+      <li class="card">
+        <p><%= pass.entries_remaining %> z <%= pass.entries_total %> wejść</p>
+        <p class="text-sm text-gray-600">Wydany <%= l(pass.created_at.to_date, format: :long) %></p>
+      </li>
+    <% end %>
+  </ul>
+
+  <h2 class="mt-8 text-xl font-semibold">Ostatnio wykorzystane wejścia</h2>
+  <% if @charged_attendances.any? %>
+    <ul class="card mt-3 space-y-1">
+      <% @charged_attendances.each do |attendance| %>
+        <li><%= l(attendance.lesson.starts_at.to_date, format: :long) %> · <%= attendance.lesson.course_group.course.name %></li>
+      <% end %>
+    </ul>
+  <% else %>
+    <p class="card mt-3 text-gray-600">Nie wykorzystano jeszcze żadnego wejścia.</p>
+  <% end %>
+<% else %>
+  <p class="card mt-6 text-gray-600">Nie masz jeszcze karnetu. Karnet wydaje sekretariat szkoły.</p>
+<% end %>

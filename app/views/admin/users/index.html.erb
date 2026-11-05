@@ -18,7 +18,7 @@
           <p class="text-sm text-gray-600"><%= user.email_address %> · <%= role_name(user.role) %></p>
         </div>
         <% unless user == Current.user %>
-          <%= link_to "Zmień rolę", edit_admin_user_path(user), class: "btn-secondary" %>
+          <%= link_to "Szczegóły", edit_admin_user_path(user), class: "btn-secondary" %>
         <% end %>
       </li>
     <% end %>

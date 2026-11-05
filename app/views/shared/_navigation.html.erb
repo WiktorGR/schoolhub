@@ -7,6 +7,7 @@
       <%= link_to "Kursy", courses_path, class: "hover:underline" %>
       <% if Current.user.participant? %>
         <%= link_to "Moje zapisy", enrollments_path, class: "hover:underline" %>
+        <%= link_to "Mój karnet", passes_path, class: "hover:underline" %>
       <% end %>
       <% if Current.user.admin? %>
         <%= link_to "Admin: kursy", admin_courses_path, class: "hover:underline" %>

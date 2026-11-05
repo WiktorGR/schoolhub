@@ -2,6 +2,16 @@
 
 <h1 class="page-title">Mój plan</h1>
 
+<% if @recent_lessons.present? %>
+  <section class="mt-6">
+    <h2 class="text-xl font-semibold">Ostatnie 7 dni</h2>
+    <ul class="mt-2 space-y-3">
+      <%= render partial: "schedules/lesson", collection: @recent_lessons, as: :lesson %>
+    </ul>
+  </section>
+  <h2 class="mt-8 text-xl font-semibold">Nadchodzące</h2>
+<% end %>
+
 <% if @lessons.any? %>
   <% @lessons.group_by { |lesson| lesson.starts_at.to_date }.each do |day, lessons| %>
     <section class="mt-6">

@@ -10,12 +10,14 @@ module Admin
     end
 
     def edit
+      @passes = @user.passes.order(created_at: :desc)
     end
 
     def update
       if @user.update(user_params)
         redirect_to admin_users_path, notice: "Rola użytkownika #{@user.name} została zmieniona."
       else
+        @passes = @user.passes.order(created_at: :desc)
         render :edit, status: :unprocessable_entity
       end
     end

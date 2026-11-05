@@ -5,4 +5,7 @@
   <% if lesson.topic.present? %>
     <p class="mt-1 text-sm"><%= lesson.topic %></p>
   <% end %>
+  <% unless Current.user.participant? %>
+    <%= link_to "Obecność", edit_lesson_attendance_path(lesson), class: "btn-secondary mt-3" %>
+  <% end %>
 </li>

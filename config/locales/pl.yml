@@ -6,6 +6,8 @@ pl:
       course_group: "Grupa"
       enrollment: "Zapis"
       lesson: "Zajęcia"
+      pass: "Karnet"
+      attendance: "Obecność"
     attributes:
       user:
         name: "Imię i nazwisko"
@@ -24,6 +26,10 @@ pl:
         instructor: "Instruktor"
         instructor_id: "Instruktor"
         course: "Kurs"
+      pass:
+        user: "Uczestnik"
+        entries_total: "Liczba wejść"
+        entries_remaining: "Pozostałe wejścia"
       lesson:
         starts_at: "Początek"
         ends_at: "Koniec"
@@ -40,6 +46,10 @@ pl:
               not_an_instructor: "wybrana osoba nie ma roli instruktora"
             capacity:
               below_active_enrollments: "nie może być mniejszy niż liczba zapisanych osób (%{count})"
+        pass:
+          attributes:
+            user:
+              not_a_participant: "karnet można wydać tylko uczestnikowi"
         lesson:
           attributes:
             ends_at:

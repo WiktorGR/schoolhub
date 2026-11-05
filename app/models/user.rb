@@ -2,6 +2,8 @@ class User < ApplicationRecord
   has_secure_password
   has_many :sessions, dependent: :destroy
   has_many :enrollments, dependent: :restrict_with_error
+  has_many :passes, dependent: :restrict_with_error
+  has_many :attendances, dependent: :restrict_with_error
   has_many :taught_course_groups, class_name: "CourseGroup", foreign_key: :instructor_id,
                                   inverse_of: :instructor, dependent: :restrict_with_error
 

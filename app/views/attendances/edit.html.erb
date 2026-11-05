@@ -1,0 +1,38 @@
+<% content_for :title, "Obecność" %>
+
+<p><%= link_to "← Mój plan", schedule_path, class: "link text-sm" %></p>
+<h1 class="page-title mt-2">Obecność</h1>
+<p class="mt-1 text-gray-700">
+  <%= @lesson.course_group.course.name %>, <%= @lesson.course_group.name %><br>
+  <%= l(@lesson.starts_at.to_date, format: :day_heading) %>, <%= l(@lesson.starts_at, format: :hour) %>–<%= l(@lesson.ends_at, format: :hour) %>
+</p>
+
+<% if @roster.any? %>
+  <%= form_with url: lesson_attendance_path(@lesson), method: :patch, class: "mt-6" do |form| %>
+    <fieldset>
+      <legend class="label">Zaznacz obecnych uczestników</legend>
+      <ul class="card mt-2 divide-y divide-gray-100 p-0">
+        <% @roster.each do |user| %>
+          <% attendance = @attendances[user.id] %>
+          <li class="flex flex-wrap items-center justify-between gap-2 px-4 py-3">
+            <label class="flex items-center gap-3">
+              <%= check_box_tag "present_user_ids[]", user.id, attendance&.present?, id: "present_#{user.id}", class: "size-5" %>
+              <span><%= user.name %></span>
+            </label>
+            <span class="text-sm text-gray-600">
+              Wejścia: <%= @entries_left.fetch(user.id, 0) %>
+              <% if attendance&.present? && !attendance.charged? %>
+                <span class="badge bg-yellow-100 text-yellow-800">bez karnetu</span>
+              <% end %>
+            </span>
+          </li>
+        <% end %>
+      </ul>
+    </fieldset>
+
+    <p class="hint">Zaznaczenie obecności pobiera jedno wejście z karnetu. Odznaczenie je zwraca. Ponowne zapisanie niczego nie zmienia.</p>
+    <%= form.submit "Zapisz obecność", class: "btn-primary mt-4 w-full sm:w-auto" %>
+  <% end %>
+<% else %>
+  <p class="card mt-6 text-gray-600">Nikt nie jest zapisany do tej grupy.</p>
+<% end %>

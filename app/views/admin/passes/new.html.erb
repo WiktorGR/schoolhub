@@ -1,0 +1,18 @@
+<% content_for :title, "Nowy karnet" %>
+
+<p><%= link_to "← #{@user.name}", edit_admin_user_path(@user), class: "link text-sm" %></p>
+<h1 class="page-title mt-2">Nowy karnet dla: <%= @user.name %></h1>
+
+<%= form_with model: @pass, url: admin_user_passes_path(@user), class: "mt-6 space-y-5" do |form| %>
+  <%= render "shared/form_errors", record: @pass %>
+
+  <div>
+    <%= form.label :entries_total, class: "label" %>
+    <%= form.number_field :entries_total, required: true, min: 1, step: 1, value: @pass.entries_total || 8, class: "input" %>
+  </div>
+
+  <div class="flex flex-wrap gap-3">
+    <%= form.submit "Wydaj karnet", class: "btn-primary" %>
+    <%= link_to "Anuluj", edit_admin_user_path(@user), class: "btn-secondary" %>
+  </div>
+<% end %>

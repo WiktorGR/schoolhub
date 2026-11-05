@@ -10,9 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_11_05_121353) do
+ActiveRecord::Schema[8.1].define(version: 2026_11_05_121549) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+
+  create_table "attendances", force: :cascade do |t|
+    t.bigint "lesson_id", null: false
+    t.bigint "user_id", null: false
+    t.boolean "present", default: false, null: false
+    t.bigint "pass_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["lesson_id", "user_id"], name: "index_attendances_on_lesson_id_and_user_id", unique: true
+    t.index ["pass_id"], name: "index_attendances_on_pass_id"
+    t.index ["user_id"], name: "index_attendances_on_user_id"
+  end
 
   create_table "course_groups", force: :cascade do |t|
     t.bigint "course_id", null: false
@@ -59,6 +71,17 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_05_121353) do
     t.check_constraint "ends_at > starts_at", name: "lessons_end_after_start"
   end
 
+  create_table "passes", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.integer "entries_total", null: false
+    t.integer "entries_remaining", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_passes_on_user_id"
+    t.check_constraint "entries_remaining >= 0 AND entries_remaining <= entries_total", name: "passes_entries_remaining_in_range"
+    t.check_constraint "entries_total > 0", name: "passes_entries_total_positive"
+  end
+
   create_table "sessions", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.string "ip_address"
@@ -79,10 +102,14 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_05_121353) do
     t.check_constraint "role = ANY (ARRAY[0, 1, 2])", name: "users_role_check"
   end
 
+  add_foreign_key "attendances", "lessons"
+  add_foreign_key "attendances", "passes"
+  add_foreign_key "attendances", "users"
   add_foreign_key "course_groups", "courses"
   add_foreign_key "course_groups", "users", column: "instructor_id"
   add_foreign_key "enrollments", "course_groups"
   add_foreign_key "enrollments", "users"
   add_foreign_key "lessons", "course_groups"
+  add_foreign_key "passes", "users"
   add_foreign_key "sessions", "users"
 end
