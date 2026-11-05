@@ -15,10 +15,10 @@
         <% @roster.each do |user| %>
           <% attendance = @attendances[user.id] %>
           <li class="flex flex-wrap items-center justify-between gap-2 px-4 py-3">
-            <label class="flex items-center gap-3">
+            <div class="flex items-center gap-3">
               <%= check_box_tag "present_user_ids[]", user.id, attendance&.present?, id: "present_#{user.id}", class: "size-5" %>
-              <span><%= user.name %></span>
-            </label>
+              <%= label_tag "present_#{user.id}", user.name %>
+            </div>
             <span class="text-sm text-gray-600">
               Wejścia: <%= @entries_left.fetch(user.id, 0) %>
               <% if attendance&.present? && !attendance.charged? %>
