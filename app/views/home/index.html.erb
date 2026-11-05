@@ -1,0 +1,7 @@
+<div class="mx-auto max-w-md p-4">
+  <h1 class="text-2xl font-bold">Witaj w SchoolHub</h1>
+  <p class="mt-2">Zalogowano jako <%= Current.user.email_address %>.</p>
+
+  <%= button_to "Wyloguj", session_path, method: :delete,
+        class: "mt-4 rounded-md bg-gray-800 px-4 py-2 text-white" %>
+</div>
