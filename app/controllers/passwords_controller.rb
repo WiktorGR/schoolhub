@@ -22,7 +22,7 @@ class PasswordsController < ApplicationController
       @user.sessions.destroy_all
       redirect_to new_session_path, notice: "Hasło zostało zmienione. Możesz się zalogować."
     else
-      redirect_to edit_password_path(params[:token]), alert: "Hasła nie są takie same."
+      redirect_to edit_password_path(params[:token]), alert: @user.errors.full_messages.to_sentence
     end
   end
 
