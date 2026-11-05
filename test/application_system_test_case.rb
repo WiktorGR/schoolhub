@@ -1,6 +1,9 @@
 require "test_helper"
 
 class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
+  # dom_id lets tests target the same element ids the views render.
+  include ActionView::RecordIdentifier
+
   driven_by :selenium, using: :headless_chrome, screen_size: [ 1280, 900 ]
 
   private
