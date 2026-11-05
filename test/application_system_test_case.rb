@@ -9,7 +9,7 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
       visit new_session_path
       fill_in "Adres e-mail", with: user.email_address
       fill_in "Hasło", with: password
-      click_on "Zaloguj się"
+      click_button "Zaloguj się"
       assert_text "Cześć, #{user.name}!"
     end
 end
