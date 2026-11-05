@@ -1,0 +1,29 @@
+<% content_for :title, "Admin: użytkownicy" %>
+
+<h1 class="page-title">Użytkownicy</h1>
+
+<nav class="mt-4 flex flex-wrap gap-2" aria-label="Filtr ról">
+  <%= link_to "Wszyscy", admin_users_path, class: params[:role].blank? ? "btn-primary" : "btn-secondary" %>
+  <% User.roles.each_key do |role| %>
+    <%= link_to role_name(role), admin_users_path(role: role), class: params[:role] == role ? "btn-primary" : "btn-secondary" %>
+  <% end %>
+</nav>
+
+<% if @users.any? %>
+  <ul class="mt-6 space-y-3">
+    <% @users.each do |user| %>
+      <li class="card flex flex-wrap items-center justify-between gap-2">
+        <div>
+          <p class="font-semibold"><%= user.name %></p>
+          <p class="text-sm text-gray-600"><%= user.email_address %> · <%= role_name(user.role) %></p>
+        </div>
+        <% unless user == Current.user %>
+          <%= link_to "Zmień rolę", edit_admin_user_path(user), class: "btn-secondary" %>
+        <% end %>
+      </li>
+    <% end %>
+  </ul>
+  <%= render "shared/pagination" %>
+<% else %>
+  <p class="card mt-6 text-gray-600">Brak użytkowników z tą rolą.</p>
+<% end %>

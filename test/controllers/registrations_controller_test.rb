@@ -36,6 +36,6 @@ class RegistrationsControllerTest < ActionDispatch::IntegrationTest
 
   private
     def valid_params
-      { email_address: "new@example.com", password: "secret123", password_confirmation: "secret123" }
+      { name: "Nowa Osoba", email_address: "new@example.com", password: "secret123", password_confirmation: "secret123" }
     end
 end

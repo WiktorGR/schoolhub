@@ -1,0 +1,15 @@
+<% if total_pages > 1 %>
+  <nav class="mt-6 flex items-center justify-between" aria-label="Stronicowanie">
+    <% if current_page > 1 %>
+      <%= link_to "← Poprzednia", url_for(request.query_parameters.merge(page: current_page - 1)), class: "btn-secondary" %>
+    <% else %>
+      <span></span>
+    <% end %>
+    <span class="text-sm text-gray-600">Strona <%= current_page %> z <%= total_pages %></span>
+    <% if current_page < total_pages %>
+      <%= link_to "Następna →", url_for(request.query_parameters.merge(page: current_page + 1)), class: "btn-secondary" %>
+    <% else %>
+      <span></span>
+    <% end %>
+  </nav>
+<% end %>

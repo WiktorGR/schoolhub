@@ -1,0 +1,21 @@
+<% content_for :title, "Kursy" %>
+
+<h1 class="page-title">Kursy</h1>
+
+<% if @courses.any? %>
+  <ul class="mt-6 grid gap-4 sm:grid-cols-2">
+    <% @courses.each do |course| %>
+      <li>
+        <%= link_to course_path(course), class: "card block h-full hover:border-blue-400" do %>
+          <h2 class="font-semibold"><%= course.name %></h2>
+          <% if course.description.present? %>
+            <p class="mt-1 line-clamp-3 text-sm text-gray-600"><%= course.description %></p>
+          <% end %>
+        <% end %>
+      </li>
+    <% end %>
+  </ul>
+  <%= render "shared/pagination" %>
+<% else %>
+  <p class="card mt-6 text-gray-600">Szkoła nie ma jeszcze żadnych kursów. Zajrzyj później!</p>
+<% end %>

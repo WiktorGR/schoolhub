@@ -1,23 +1,17 @@
-<div class="mx-auto md:w-2/3 w-full">
-  <% if alert = flash[:alert] %>
-    <p class="py-2 px-3 bg-red-50 mb-5 text-red-500 font-medium rounded-lg inline-block" id="alert"><%= alert %></p>
-  <% end %>
+<div class="mx-auto max-w-md">
+  <h1 class="page-title">Ustaw nowe hasło</h1>
 
-  <h1 class="font-bold text-4xl">Ustaw nowe hasło</h1>
-
-  <%= form_with url: password_path(params[:token]), method: :put, class: "contents" do |form| %>
-    <div class="my-5">
-      <%= form.label :password, "Nowe hasło", class: "font-medium" %>
-      <%= form.password_field :password, required: true, autocomplete: "new-password", maxlength: 72, class: "block shadow-sm rounded-md border border-gray-400 focus:outline-solid focus:outline-blue-600 px-3 py-2 mt-2 w-full" %>
+  <%= form_with url: password_path(params[:token]), method: :put, class: "mt-6 space-y-5" do |form| %>
+    <div>
+      <%= form.label :password, "Nowe hasło", class: "label" %>
+      <%= form.password_field :password, required: true, autocomplete: "new-password", minlength: 8, maxlength: 72, class: "input" %>
     </div>
 
-    <div class="my-5">
-      <%= form.label :password_confirmation, "Powtórz nowe hasło", class: "font-medium" %>
-      <%= form.password_field :password_confirmation, required: true, autocomplete: "new-password", maxlength: 72, class: "block shadow-sm rounded-md border border-gray-400 focus:outline-solid focus:outline-blue-600 px-3 py-2 mt-2 w-full" %>
+    <div>
+      <%= form.label :password_confirmation, "Powtórz nowe hasło", class: "label" %>
+      <%= form.password_field :password_confirmation, required: true, autocomplete: "new-password", maxlength: 72, class: "input" %>
     </div>
 
-    <div class="inline">
-      <%= form.submit "Zapisz", class: "w-full sm:w-auto text-center rounded-md px-3.5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white inline-block font-medium cursor-pointer" %>
-    </div>
+    <%= form.submit "Zapisz", class: "btn-primary w-full sm:w-auto" %>
   <% end %>
 </div>

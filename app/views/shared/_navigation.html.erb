@@ -1,0 +1,17 @@
+<header class="border-b border-gray-200 bg-white">
+  <nav class="mx-auto flex max-w-4xl flex-wrap items-center gap-x-4 gap-y-2 px-4 py-3" aria-label="Główna nawigacja">
+    <%= link_to "SchoolHub", root_path, class: "mr-auto text-lg font-bold text-blue-700" %>
+
+    <% if authenticated? %>
+      <%= link_to "Kursy", courses_path, class: "hover:underline" %>
+      <% if Current.user.admin? %>
+        <%= link_to "Admin: kursy", admin_courses_path, class: "hover:underline" %>
+        <%= link_to "Admin: użytkownicy", admin_users_path, class: "hover:underline" %>
+      <% end %>
+      <%= button_to "Wyloguj", session_path, method: :delete, class: "text-gray-600 hover:underline", form_class: "inline" %>
+    <% else %>
+      <%= link_to "Zaloguj się", new_session_path, class: "hover:underline" %>
+      <%= link_to "Załóż konto", new_registration_path, class: "hover:underline" %>
+    <% end %>
+  </nav>
+</header>

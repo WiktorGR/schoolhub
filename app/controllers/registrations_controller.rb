@@ -21,6 +21,6 @@ class RegistrationsController < ApplicationController
   private
     # Role is never permitted here: self-registered users are always participants.
     def registration_params
-      params.expect(user: [ :email_address, :password, :password_confirmation ])
+      params.expect(user: [ :name, :email_address, :password, :password_confirmation ])
     end
 end

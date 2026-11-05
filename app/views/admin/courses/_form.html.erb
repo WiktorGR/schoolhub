@@ -1,0 +1,18 @@
+<%= form_with model: [ :admin, course ], class: "mt-6 space-y-5" do |form| %>
+  <%= render "shared/form_errors", record: course %>
+
+  <div>
+    <%= form.label :name, class: "label" %>
+    <%= form.text_field :name, required: true, maxlength: 100, placeholder: "np. Angielski B1", class: "input" %>
+  </div>
+
+  <div>
+    <%= form.label :description, class: "label" %>
+    <%= form.text_area :description, rows: 4, class: "input" %>
+  </div>
+
+  <div class="flex flex-wrap gap-3">
+    <%= form.submit "Zapisz", class: "btn-primary" %>
+    <%= link_to "Anuluj", course.persisted? ? admin_course_path(course) : admin_courses_path, class: "btn-secondary" %>
+  </div>
+<% end %>

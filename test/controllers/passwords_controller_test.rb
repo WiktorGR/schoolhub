@@ -57,7 +57,7 @@ class PasswordsControllerTest < ActionDispatch::IntegrationTest
     end
 
     follow_redirect!
-    assert_notice "Powtórzenie hasła nie zgadza się z hasłem"
+    assert_notice "Powtórzenie hasła: wartości się nie zgadzają"
   end
 
   test "update with a too short password" do
@@ -68,7 +68,7 @@ class PasswordsControllerTest < ActionDispatch::IntegrationTest
     end
 
     follow_redirect!
-    assert_notice "Hasło jest za krótkie"
+    assert_notice "Hasło: za mało znaków"
   end
 
   private

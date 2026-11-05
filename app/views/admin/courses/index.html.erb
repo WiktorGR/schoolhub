@@ -1,0 +1,19 @@
+<% content_for :title, "Admin: kursy" %>
+
+<div class="flex flex-wrap items-center justify-between gap-3">
+  <h1 class="page-title">Kursy</h1>
+  <%= link_to "Dodaj kurs", new_admin_course_path, class: "btn-primary" %>
+</div>
+
+<% if @courses.any? %>
+  <ul class="mt-6 space-y-3">
+    <% @courses.each do |course| %>
+      <li class="card">
+        <%= link_to course.name, admin_course_path(course), class: "link font-semibold" %>
+      </li>
+    <% end %>
+  </ul>
+  <%= render "shared/pagination" %>
+<% else %>
+  <p class="card mt-6 text-gray-600">Nie ma jeszcze żadnych kursów. Dodaj pierwszy kurs.</p>
+<% end %>

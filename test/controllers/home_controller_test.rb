@@ -13,6 +13,6 @@ class HomeControllerTest < ActionDispatch::IntegrationTest
     get root_path
 
     assert_response :success
-    assert_select "h1", "Witaj w SchoolHub"
+    assert_select "h1", "Cześć, Anna Nowak!"
   end
 end

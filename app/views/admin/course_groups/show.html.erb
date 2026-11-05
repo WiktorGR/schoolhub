@@ -1,0 +1,17 @@
+<% content_for :title, @course_group.name %>
+
+<p><%= link_to "← #{@course_group.course.name}", admin_course_path(@course_group.course), class: "link text-sm" %></p>
+
+<div class="mt-2 flex flex-wrap items-center justify-between gap-3">
+  <h1 class="page-title"><%= @course_group.name %></h1>
+  <div class="flex flex-wrap gap-2">
+    <%= link_to "Edytuj", edit_admin_course_group_path(@course_group), class: "btn-secondary" %>
+    <%= button_to "Usuń", admin_course_group_path(@course_group), method: :delete, class: "btn-danger",
+          form: { data: { turbo_confirm: "Na pewno usunąć tę grupę?" } } %>
+  </div>
+</div>
+
+<dl class="card mt-4 grid gap-2 sm:grid-cols-2">
+  <div><dt class="text-sm text-gray-500">Instruktor</dt><dd><%= @course_group.instructor.name %></dd></div>
+  <div><dt class="text-sm text-gray-500">Limit miejsc</dt><dd><%= @course_group.capacity %></dd></div>
+</dl>

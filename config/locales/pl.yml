@@ -2,18 +2,51 @@ pl:
   activerecord:
     models:
       user: "Użytkownik"
+      course: "Kurs"
+      course_group: "Grupa"
     attributes:
       user:
+        name: "Imię i nazwisko"
         email_address: "Adres e-mail"
         password: "Hasło"
         password_confirmation: "Powtórzenie hasła"
         role: "Rola"
-    # rails-i18n messages assume a grammatical gender that does not fit these attribute names.
+        taught_course_groups: "Prowadzone grupy"
+      course:
+        name: "Nazwa"
+        description: "Opis"
+        course_groups: "Grupy"
+      course_group:
+        name: "Nazwa grupy"
+        capacity: "Limit miejsc"
+        instructor: "Instruktor"
+        instructor_id: "Instruktor"
+        course: "Kurs"
     errors:
       models:
-        user:
+        course_group:
           attributes:
-            email_address:
-              taken: "jest już zajęty"
-            password_confirmation:
-              confirmation: "nie zgadza się z hasłem"
+            instructor:
+              not_an_instructor: "wybrana osoba nie ma roli instruktora"
+  # rails-i18n phrases agree with a neuter noun ("nie może być puste"), which is wrong for
+  # most of our attribute names. "Field: message" with neutral phrasing reads well for all.
+  errors:
+    format: "%{attribute}: %{message}"
+    messages:
+      blank: "to pole jest wymagane"
+      taken: "ta wartość jest już zajęta"
+      invalid: "nieprawidłowa wartość"
+      inclusion: "niedozwolona wartość"
+      confirmation: "wartości się nie zgadzają"
+      not_a_number: "wartość musi być liczbą"
+      not_an_integer: "wartość musi być liczbą całkowitą"
+      greater_than: "wartość musi być większa od %{count}"
+      greater_than_or_equal_to: "wartość musi być większa lub równa %{count}"
+      less_than_or_equal_to: "wartość musi być mniejsza lub równa %{count}"
+      too_short: "za mało znaków (minimum %{count})"
+      too_long: "za dużo znaków (maksimum %{count})"
+      required: "to pole jest wymagane"
+  roles:
+    participant: "Uczestnik"
+    instructor: "Instruktor"
+    admin: "Admin"

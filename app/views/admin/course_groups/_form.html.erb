@@ -1,0 +1,27 @@
+<%= form_with model: course_group, url: course_group.persisted? ? admin_course_group_path(course_group) : admin_course_course_groups_path(course_group.course), class: "mt-6 space-y-5" do |form| %>
+  <%= render "shared/form_errors", record: course_group %>
+
+  <div>
+    <%= form.label :name, class: "label" %>
+    <%= form.text_field :name, required: true, maxlength: 100, placeholder: "np. Wtorki i czwartki 18:00", class: "input" %>
+  </div>
+
+  <div>
+    <%= form.label :capacity, class: "label" %>
+    <%= form.number_field :capacity, required: true, min: 1, step: 1, class: "input" %>
+  </div>
+
+  <div>
+    <%= form.label :instructor_id, class: "label" %>
+    <% if instructors.any? %>
+      <%= form.collection_select :instructor_id, instructors, :id, :name, { prompt: "Wybierz instruktora" }, { required: true, class: "input" } %>
+    <% else %>
+      <p class="hint">Brak instruktorów. Najpierw nadaj komuś rolę instruktora w zakładce <%= link_to "Użytkownicy", admin_users_path, class: "link" %>.</p>
+    <% end %>
+  </div>
+
+  <div class="flex flex-wrap gap-3">
+    <%= form.submit "Zapisz", class: "btn-primary" %>
+    <%= link_to "Anuluj", course_group.persisted? ? admin_course_group_path(course_group) : admin_course_path(course_group.course), class: "btn-secondary" %>
+  </div>
+<% end %>

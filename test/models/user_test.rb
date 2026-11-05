@@ -27,7 +27,7 @@ class UserTest < ActiveSupport::TestCase
   end
 
   test "requires a unique email address regardless of case" do
-    user = User.new(email_address: users(:one).email_address.upcase, password: "secret123")
+    user = User.new(name: "Test", email_address: users(:one).email_address.upcase, password: "secret123")
 
     assert_not user.valid?
     assert user.errors.added?(:email_address, :taken, value: users(:one).email_address)
@@ -47,12 +47,19 @@ class UserTest < ActiveSupport::TestCase
     assert user.errors.of_kind?(:password, :too_short)
   end
 
-  test "uses grammatical Polish error messages" do
+  test "requires a name" do
+    user = User.new(name: " ")
+
+    assert_not user.valid?
+    assert user.errors.of_kind?(:name, :blank)
+  end
+
+  test "uses readable Polish error messages" do
     user = User.new(email_address: users(:one).email_address, password: "secret123", password_confirmation: "other123")
 
     user.validate
 
-    assert_includes user.errors.full_messages, "Adres e-mail jest już zajęty"
-    assert_includes user.errors.full_messages, "Powtórzenie hasła nie zgadza się z hasłem"
+    assert_includes user.errors.full_messages, "Adres e-mail: ta wartość jest już zajęta"
+    assert_includes user.errors.full_messages, "Powtórzenie hasła: wartości się nie zgadzają"
   end
 end

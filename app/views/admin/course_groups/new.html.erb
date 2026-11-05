@@ -1,0 +1,5 @@
+<% content_for :title, "Nowa grupa" %>
+
+<p><%= link_to "← #{@course.name}", admin_course_path(@course), class: "link text-sm" %></p>
+<h1 class="page-title mt-2">Nowa grupa</h1>
+<%= render "form", course_group: @course_group, instructors: @instructors %>

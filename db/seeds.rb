@@ -11,13 +11,14 @@
 # Demo accounts, one per role. Safe to run many times: existing users are left as they are.
 DEMO_PASSWORD = "demo12345"
 
-{
-  "admin@schoolhub.test" => :admin,
-  "instruktor@schoolhub.test" => :instructor,
-  "uczestnik@schoolhub.test" => :participant
-}.each do |email_address, role|
-  User.find_or_create_by!(email_address: email_address) do |user|
-    user.role = role
+[
+  { name: "Alicja Admin", email_address: "admin@schoolhub.test", role: :admin },
+  { name: "Igor Instruktor", email_address: "instruktor@schoolhub.test", role: :instructor },
+  { name: "Ula Uczestniczka", email_address: "uczestnik@schoolhub.test", role: :participant }
+].each do |attributes|
+  User.find_or_create_by!(email_address: attributes[:email_address]) do |user|
+    user.name = attributes[:name]
+    user.role = attributes[:role]
     user.password = DEMO_PASSWORD
   end
 end

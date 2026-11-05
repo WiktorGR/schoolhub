@@ -1,18 +1,12 @@
-<div class="mx-auto md:w-2/3 w-full">
-  <% if alert = flash[:alert] %>
-    <p class="py-2 px-3 bg-red-50 mb-5 text-red-500 font-medium rounded-lg inline-block" id="alert"><%= alert %></p>
-  <% end %>
+<div class="mx-auto max-w-md">
+  <h1 class="page-title">Nie pamiętasz hasła?</h1>
 
-  <h1 class="font-bold text-4xl">Nie pamiętasz hasła?</h1>
-
-  <%= form_with url: passwords_path, class: "contents" do |form| %>
-    <div class="my-5">
-      <%= form.label :email_address, "Adres e-mail", class: "font-medium" %>
-      <%= form.email_field :email_address, required: true, autofocus: true, autocomplete: "username", placeholder: "np. anna@example.com", value: params[:email_address], class: "block shadow-sm rounded-md border border-gray-400 focus:outline-solid focus:outline-blue-600 px-3 py-2 mt-2 w-full" %>
+  <%= form_with url: passwords_path, class: "mt-6 space-y-5" do |form| %>
+    <div>
+      <%= form.label :email_address, "Adres e-mail", class: "label" %>
+      <%= form.email_field :email_address, required: true, autofocus: true, autocomplete: "username", placeholder: "np. anna@example.com", value: params[:email_address], class: "input" %>
     </div>
 
-    <div class="inline">
-      <%= form.submit "Wyślij instrukcję resetu", class: "w-full sm:w-auto text-center rounded-lg px-3.5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white inline-block font-medium cursor-pointer" %>
-    </div>
+    <%= form.submit "Wyślij instrukcję resetu", class: "btn-primary w-full sm:w-auto" %>
   <% end %>
 </div>

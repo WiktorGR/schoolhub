@@ -1,0 +1,17 @@
+english_evening:
+  course: english
+  instructor: instructor
+  name: Wtorki 18:00
+  capacity: 2
+
+english_morning:
+  course: english
+  instructor: other_instructor
+  name: Soboty 10:00
+  capacity: 10
+
+salsa_beginners:
+  course: salsa
+  instructor: instructor
+  name: Poniedziałki 19:00
+  capacity: 12
