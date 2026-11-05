@@ -12,6 +12,7 @@ class EnrollmentsController < ApplicationController
     enrollment = course_group.enroll(Current.user)
 
     if enrollment.persisted?
+      EnrollmentMailer.confirmation(enrollment).deliver_later
       redirect_to course_path(course_group.course), notice: enrollment_notice(enrollment)
     else
       redirect_to course_path(course_group.course), alert: enrollment.errors.full_messages.to_sentence
@@ -21,7 +22,7 @@ class EnrollmentsController < ApplicationController
   def destroy
     # Scoped to the current user, so nobody can cancel someone else's enrollment (IDOR).
     enrollment = Current.user.enrollments.find(params.expect(:id))
-    enrollment.cancel!
+    enrollment.cancel!.each { |promoted| EnrollmentMailer.promoted(promoted).deliver_later }
 
     redirect_back_or_to enrollments_path, notice: "Zrezygnowano z zapisu do grupy #{enrollment.course_group.name}.",
                                           status: :see_other

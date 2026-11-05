@@ -1,0 +1,8 @@
+<p>Cześć <%= @enrollment.user.name %>,</p>
+
+<p>
+  dobra wiadomość: zwolniło się miejsce w grupie <strong><%= @course_group.name %></strong>
+  w kursie <strong><%= @course_group.course.name %></strong>. Miejsce jest już Twoje, nie musisz nic robić.
+</p>
+
+<p><%= link_to "Zobacz swoje zapisy", enrollments_url %></p>

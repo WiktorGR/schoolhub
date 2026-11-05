@@ -1,0 +1,16 @@
+<p>Cześć <%= @enrollment.user.name %>,</p>
+
+<% if @enrollment.waitlisted? %>
+  <p>
+    grupa <strong><%= @course_group.name %></strong> w kursie <strong><%= @course_group.course.name %></strong> jest pełna,
+    więc dopisaliśmy Cię do listy rezerwowej (pozycja <%= @enrollment.waitlist_position %>).
+    Gdy zwolni się miejsce, dostaniesz e-mail.
+  </p>
+<% else %>
+  <p>
+    masz miejsce w grupie <strong><%= @course_group.name %></strong> w kursie <strong><%= @course_group.course.name %></strong>.
+    Instruktor: <%= @course_group.instructor.name %>.
+  </p>
+<% end %>
+
+<p><%= link_to "Zobacz swoje zapisy", enrollments_url %></p>

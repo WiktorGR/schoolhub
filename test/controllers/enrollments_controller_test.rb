@@ -1,6 +1,8 @@
 require "test_helper"
 
 class EnrollmentsControllerTest < ActionDispatch::IntegrationTest
+  include ActionMailer::TestHelper
+
   setup do
     @group = course_groups(:english_evening)
   end
@@ -86,6 +88,42 @@ class EnrollmentsControllerTest < ActionDispatch::IntegrationTest
     assert_select "##{ActionView::RecordIdentifier.dom_id(@group)}" do
       assert_select "strong", "1"
       assert_select ".badge", "Masz miejsce"
+    end
+  end
+
+  test "enrolling sends a confirmation email in the background" do
+    sign_in_as users(:two)
+
+    assert_enqueued_email_with EnrollmentMailer, :confirmation, args: ->(args) { args.first.user == users(:two) } do
+      post course_group_enrollments_path(@group)
+    end
+  end
+
+  test "a failed enrollment sends no email" do
+    sign_in_as users(:one)
+
+    assert_no_enqueued_emails do
+      post course_group_enrollments_path(@group)
+    end
+  end
+
+  test "cancelling a seat emails the promoted participant" do
+    @group.enroll(users(:two))
+    waitlisted = @group.enroll(users(:three))
+    sign_in_as users(:one)
+
+    assert_enqueued_email_with EnrollmentMailer, :promoted, args: [ waitlisted ] do
+      delete enrollment_path(enrollments(:one_in_english_evening))
+    end
+  end
+
+  test "cancelling a waitlist place emails nobody" do
+    @group.enroll(users(:two))
+    waitlisted = @group.enroll(users(:three))
+    sign_in_as users(:three)
+
+    assert_no_enqueued_emails do
+      delete enrollment_path(waitlisted)
     end
   end
 end

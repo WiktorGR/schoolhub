@@ -1,0 +1,9 @@
+Cześć <%= @enrollment.user.name %>,
+
+<% if @enrollment.waitlisted? -%>
+grupa <%= @course_group.name %> w kursie <%= @course_group.course.name %> jest pełna, więc dopisaliśmy Cię do listy rezerwowej (pozycja <%= @enrollment.waitlist_position %>). Gdy zwolni się miejsce, dostaniesz e-mail.
+<% else -%>
+masz miejsce w grupie <%= @course_group.name %> w kursie <%= @course_group.course.name %>. Instruktor: <%= @course_group.instructor.name %>.
+<% end -%>
+
+Twoje zapisy: <%= enrollments_url %>

@@ -28,11 +28,12 @@ module Admin
 
     def update
       # A larger capacity frees seats, which go to the waitlist straight away.
-      saved = @course_group.with_lock do
+      promoted = @course_group.with_lock do
         @course_group.update(course_group_params) && @course_group.fill_free_seats_from_waitlist
       end
 
-      if saved
+      if promoted
+        promoted.each { |enrollment| EnrollmentMailer.promoted(enrollment).deliver_later }
         redirect_to admin_course_group_path(@course_group), notice: "Grupa została zapisana."
       else
         render :edit, status: :unprocessable_entity

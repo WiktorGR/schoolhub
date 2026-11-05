@@ -2,6 +2,8 @@ require "test_helper"
 
 module Admin
   class CourseGroupsControllerTest < ActionDispatch::IntegrationTest
+    include ActionMailer::TestHelper
+
     setup do
       @course = courses(:english)
       @group = course_groups(:english_evening)
@@ -76,7 +78,9 @@ module Admin
       waitlisted = @group.enroll(users(:three))
       sign_in_as users(:admin)
 
-      patch admin_course_group_path(@group), params: { course_group: { capacity: 3 } }
+      assert_enqueued_email_with EnrollmentMailer, :promoted, args: [ waitlisted ] do
+        patch admin_course_group_path(@group), params: { course_group: { capacity: 3 } }
+      end
 
       assert waitlisted.reload.active?
     end
