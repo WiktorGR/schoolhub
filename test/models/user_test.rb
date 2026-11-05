@@ -5,4 +5,24 @@ class UserTest < ActiveSupport::TestCase
     user = User.new(email_address: " DOWNCASED@EXAMPLE.COM ")
     assert_equal("downcased@example.com", user.email_address)
   end
+
+  test "new users are participants by default" do
+    user = User.new
+
+    assert user.participant?
+  end
+
+  test "is invalid with an unknown role" do
+    user = users(:one)
+    user.role = "superuser"
+
+    assert_not user.valid?
+    assert user.errors.added?(:role, :inclusion, value: "superuser")
+  end
+
+  test "database rejects an unknown role value" do
+    assert_raises(ActiveRecord::StatementInvalid) do
+      users(:one).update_column(:role, 99)
+    end
+  end
 end
