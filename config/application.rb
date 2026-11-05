@@ -22,6 +22,10 @@ module Schoolhub
     # in config/environments, which are processed later.
     #
     # config.time_zone = "Central Time (US & Canada)"
+
+    # The UI is Polish only; translations for built-in messages come from rails-i18n.
+    config.i18n.available_locales = [ :pl ]
+    config.i18n.default_locale = :pl
     # config.eager_load_paths << Rails.root.join("extras")
   end
 end

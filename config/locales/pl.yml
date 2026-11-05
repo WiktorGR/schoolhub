@@ -1,0 +1,10 @@
+pl:
+  activerecord:
+    models:
+      user: "Użytkownik"
+    attributes:
+      user:
+        email_address: "Adres e-mail"
+        password: "Hasło"
+        password_confirmation: "Powtórzenie hasła"
+        role: "Rola"
