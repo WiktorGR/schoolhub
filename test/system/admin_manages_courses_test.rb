@@ -17,7 +17,7 @@ class AdminManagesCoursesTest < ApplicationSystemTestCase
     click_on "Zapisz"
     assert_text "Grupa została dodana."
 
-    click_on "Wyloguj"
+    sign_out_via_menu
     sign_in_via_form users(:one)
     click_on "Kursy", match: :first
     click_on "Francuski A1"

@@ -15,4 +15,10 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
       click_button "Zaloguj się"
       assert_text "Cześć, #{user.name}!"
     end
+
+    # Waits until the sign out has finished; otherwise the next visit can race the request.
+    def sign_out_via_menu
+      click_on "Wyloguj"
+      assert_no_button "Wyloguj"
+    end
 end
